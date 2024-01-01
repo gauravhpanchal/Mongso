@@ -58,7 +58,7 @@ const AccountPage = () => {
         lastname: lastName,
         gender,
         email,
-        dob,
+        dob: dob.split("T")[0],
         phone,
         about,
         image
