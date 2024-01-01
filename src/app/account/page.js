@@ -1,7 +1,4 @@
-"use client";
-import { useState } from "react";
 import { RiImageAddLine } from "react-icons/ri";
-
 const AccountPage = () => {
   const [image, setImage] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -12,6 +9,7 @@ const AccountPage = () => {
   const [phone, setPhone] = useState("");
   const [about, setAbout] = useState("");
   const [errors, setErrors] = useState({});
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,7 +49,7 @@ const AccountPage = () => {
       return;
     }
 
-    let data = await fetch("http://localhost:3000/api/products", {
+    let data = await fetch("/api/products", {
       method: "POST",
       body: JSON.stringify({
         firstname: firstName,
@@ -76,6 +74,8 @@ const AccountPage = () => {
       setAbout("");
     }
   };
+
+  const currentDate = new Date().toISOString().split("T")[0]
   return (
     <div className="mt-8">
       <p className="text-2xl font-semibold mb-4">Account information</p>
@@ -181,6 +181,7 @@ const AccountPage = () => {
               <input
                 type="date"
                 id="dob"
+                max={currentDate}
                 onChange={(e) => setDob(e.target.value)}
                 value={dob}
                 className="px-3 py-3 focus:border-blue-100 mb-1 rounded-2xl border w-[700px] text-sm text-gray-700"

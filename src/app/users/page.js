@@ -1,5 +1,6 @@
+
 const getUsers=async()=>{
-        let data = await fetch("http://localhost:3000/api/products",{ next: { revalidate: 1 } },{cache:"no-store"})
+        let data = await fetch("/api/products",{ next: { revalidate: 1 } },{cache:"no-store"})
         data=await data.json();
         if(data.success){
             return data.data;
@@ -10,6 +11,7 @@ const getUsers=async()=>{
 }
 
 const UsersPage=async()=>{
+
             const users =await getUsers();
     return(
         <div className="mt-8">
