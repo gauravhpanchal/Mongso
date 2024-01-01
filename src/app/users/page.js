@@ -1,6 +1,6 @@
 
 const getUsers=async()=>{
-        let data = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/products`,{ next: { revalidate: 0 } })
+        let data = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/user`,{ next: { revalidate: 0 } })
         data=await data.json();
         if(data.success){
             return data.data;

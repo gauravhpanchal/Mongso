@@ -51,7 +51,7 @@ const AccountPage = () => {
       return;
     }
 
-    let data = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/products`, {
+    let data = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/user`, {
       method: "POST",
       body: JSON.stringify({
         firstname: firstName,
