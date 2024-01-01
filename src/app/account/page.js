@@ -1,4 +1,5 @@
 import { RiImageAddLine } from "react-icons/ri";
+import {useState} from "react"
 const AccountPage = () => {
   const [image, setImage] = useState("");
   const [firstName, setFirstName] = useState("");
