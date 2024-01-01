@@ -1,3 +1,4 @@
+"use client"
 import { RiImageAddLine } from "react-icons/ri";
 import {useState} from "react"
 const AccountPage = () => {
@@ -11,7 +12,7 @@ const AccountPage = () => {
   const [about, setAbout] = useState("");
   const [errors, setErrors] = useState({});
 
-
+  const API_URL = process.env.NEXT_API_URL
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -50,7 +51,7 @@ const AccountPage = () => {
       return;
     }
 
-    let data = await fetch("/api/products", {
+    let data = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/products`, {
       method: "POST",
       body: JSON.stringify({
         firstname: firstName,
