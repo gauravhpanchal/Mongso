@@ -1,6 +1,6 @@
-"use client"
+"use client";
 import { RiImageAddLine } from "react-icons/ri";
-import {useState} from "react"
+import { useState } from "react";
 const AccountPage = () => {
   const [image, setImage] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -12,7 +12,7 @@ const AccountPage = () => {
   const [about, setAbout] = useState("");
   const [errors, setErrors] = useState({});
 
-  const API_URL = process.env.NEXT_API_URL
+  const API_URL = process.env.NEXT_API_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -31,7 +31,7 @@ const AccountPage = () => {
     }
     if (!dob) {
       fieldErrors.dob = "Date of birth is required";
-    }else{
+    } else {
       const currentDate = new Date();
       const enteredDate = new Date(dob);
 
@@ -61,9 +61,10 @@ const AccountPage = () => {
         dob: dob.split("T")[0],
         phone,
         about,
-        image
+        image,
       }),
     });
+    console.log(data);
     data = await data.json();
     if (data.success) {
       alert("New user added");
@@ -77,7 +78,7 @@ const AccountPage = () => {
     }
   };
 
-  const currentDate = new Date().toISOString().split("T")[0]
+  const currentDate = new Date().toISOString().split("T")[0];
   return (
     <div className="mt-8">
       <p className="text-2xl font-semibold mb-4">Account information</p>
@@ -89,7 +90,7 @@ const AccountPage = () => {
             <p className="text-white font-normal text-sm">Change image</p>
             <input
               type="image"
-              onChange={(e)=>setImage(e.target.value)}
+              onChange={(e) => setImage(e.target.value)}
               alt="Change Image"
               className=" opacity-0 cursor-pointer text-xs w-[128px] h-[128px] border border-gray-300 hover:border-blue-100 hover:border-[3px] rounded-full"
             />
