@@ -5,6 +5,7 @@ const Navbar = () => {
     <>
       <div className="flex justify-between items-center align-center mb-8">
         <div>
+          {/* logo */}
           <Link href="/">
             <Image src="/logo.svg" height={60} width={60} alt="logo" />
           </Link>
