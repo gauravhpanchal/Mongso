@@ -51,7 +51,10 @@ const AccountPage = () => {
       return;
     }
 
-    let data = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/user`, {
+    let apiUrl = `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/user`;
+    console.log("API URL:", apiUrl);
+
+    let data = await fetch(apiUrl, {
       method: "POST",
       body: JSON.stringify({
         firstname: firstName,
@@ -64,6 +67,20 @@ const AccountPage = () => {
         image,
       }),
     });
+
+    // let data = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/user`, {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     firstname: firstName,
+    //     lastname: lastName,
+    //     gender,
+    //     email,
+    //     dob: dob.split("T")[0],
+    //     phone,
+    //     about,
+    //     image,
+    //   }),
+    // });
     console.log(data);
     data = await data.json();
     if (data.success) {
