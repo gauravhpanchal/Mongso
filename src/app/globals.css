@@ -6,3 +6,9 @@ body {
   background-color: #f9fafb;
   padding: 20px 128px;
 }
+
+@media (max-width: 768px) {
+  body {
+    padding: 20px 16px;
+  }
+}
