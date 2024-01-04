@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       max: 50,
-      unique:true
+      unique: true,
     },
     dob: {
       type: String,
@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema(
       min: 3,
       max: 200,
     },
-    image: {
+    file: {
       type: String,
     },
   },

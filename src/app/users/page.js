@@ -35,6 +35,7 @@ const UsersPage = async () => {
             <th className="py-2 px-4 border">Date of Birth</th>
             <th className="py-2 px-4 border">Phone No</th>
             <th className="py-2 px-4 border">About</th>
+            <th className="py-2 px-4 border">Image</th>
           </tr>
         </thead>
         <tbody>
@@ -47,6 +48,9 @@ const UsersPage = async () => {
               <td className="py-2 px-4 border">{user.dob}</td>
               <td className="py-2 px-4 border">{user.phone}</td>
               <td className="py-2 px-4 border">{user.about}</td>
+              <td className="py-2 px-4 border">
+                <img src={user.file} />
+              </td>
             </tr>
           ))}
         </tbody>

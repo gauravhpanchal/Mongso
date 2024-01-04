@@ -1,8 +1,14 @@
 "use client";
 import { RiImageAddLine } from "react-icons/ri";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { format } from "date-fns";
+import axios from "axios";
+import Image from "next/image";
+
 const AccountPage = () => {
-  const [image, setImage] = useState("");
+  const [file, setFile] = useState(null);
+  const [url, setUrl] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [gender, setGender] = useState("");
@@ -13,8 +19,56 @@ const AccountPage = () => {
   const [errors, setErrors] = useState({});
 
   const API_URL = process.env.NEXT_API_URL;
+
+  const uploadFile = async () => {
+    if (!file) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await fetch("/api/upload_file", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+      setUrl(data.url);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (file) {
+      uploadFile();
+    }
+  }, [file]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // if (!file) {
+    //   return;
+    // }
+
+    // const formData = new FormData();
+    // formData.append("file", file);
+
+    // try {
+    //   const response = await fetch("/api/upload_file", {
+    //     method: "POST",
+    //     body: formData,
+    //   });
+
+    //   const data = await response.json();
+    //   console.log(data);
+    // } catch (error) {
+    //   console.log(error);
+    // }
 
     const fieldErrors = {};
     if (!firstName) {
@@ -52,7 +106,7 @@ const AccountPage = () => {
     }
 
     let apiUrl = `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/user`;
-    console.log("API URL:", apiUrl);
+    // console.log("API URL:", apiUrl);
 
     let data = await fetch(apiUrl, {
       method: "POST",
@@ -64,24 +118,10 @@ const AccountPage = () => {
         dob: dob.split("T")[0],
         phone,
         about,
-        image,
+        file: url,
       }),
     });
 
-    // let data = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/user`, {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     firstname: firstName,
-    //     lastname: lastName,
-    //     gender,
-    //     email,
-    //     dob: dob.split("T")[0],
-    //     phone,
-    //     about,
-    //     image,
-    //   }),
-    // });
-    console.log(data);
     data = await data.json();
     if (data.success) {
       alert("New user added");
@@ -95,6 +135,13 @@ const AccountPage = () => {
     }
   };
 
+  var cn = "";
+  console.log(url);
+
+  if (!url) {
+    cn = "pt-9";
+  }
+
   const currentDate = new Date().toISOString().split("T")[0];
   return (
     <div className="mt-8">
@@ -102,15 +149,59 @@ const AccountPage = () => {
       <form onSubmit={handleSubmit}>
         {/* Image  */}
         <div className="flex gap-10 pt-4">
-          <div className="w-[128px] h-[128px] border ab rounded-full flex bg-[#314044] flex-col pt-9 justify-center items-center">
-            <RiImageAddLine className="h-[60px] w-[60px] text-white " />
-            <p className="text-white font-normal text-sm">Change image</p>
-            <input
-              type="image"
-              onChange={(e) => setImage(e.target.value)}
-              alt="Change Image"
-              className=" opacity-0 cursor-pointer text-xs w-[128px] h-[128px] border border-gray-300 hover:border-blue-100 hover:border-[3px] rounded-full"
-            />
+          <div
+            className={`w-[128px] h-[128px] border ab rounded-full flex bg-[#314044] flex-col justify-center items-center`}
+          >
+            {url ? (
+              <div className="relative w-[128px] h-[128px] rounded-full overflow-hidden">
+                <Image
+                  src={url}
+                  width={128}
+                  height={128}
+                  alt="uploaded-image"
+                  className="rounded-full object-cover h-full w-full"
+                />
+              </div>
+            ) : (
+              <>
+                <RiImageAddLine className="h-[60px] w-[60px] mt-9 text-white " />
+                <label
+                  htmlFor="fileInput"
+                  className="text-white font-normal text-sm"
+                >
+                  Change image
+                </label>
+                <input
+                  type="file"
+                  id="fileInput"
+                  accept="image/*"
+                  onChange={(e) => {
+                    if (e.target.files !== null) {
+                      setFile(e.target.files[0]);
+                      // handleUploadFile();
+                    }
+                  }}
+                  alt="Change Image"
+                  className=" opacity-0 cursor-pointer text-xs w-[128px] h-[128px] border border-gray-300 hover:border-blue-100 hover:border-[3px] rounded-full"
+                />
+              </>
+            )}
+            {/* <>
+              <RiImageAddLine className="h-[60px] w-[60px] text-white " />
+              <p className="text-white font-normal text-sm">Change image</p>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  if (e.target.files !== null) {
+                    setFile(e.target.files[0]);
+                    // handleUploadFile();
+                  }
+                }}
+                alt="Change Image"
+                className=" opacity-0 cursor-pointer text-xs w-[128px] h-[128px] border border-gray-300 hover:border-blue-100 hover:border-[3px] rounded-full"
+              />
+            </> */}
           </div>
           {/* Inputs */}
           <div className="flex flex-col">
