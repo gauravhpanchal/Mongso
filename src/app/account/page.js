@@ -51,25 +51,6 @@ const AccountPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // if (!file) {
-    //   return;
-    // }
-
-    // const formData = new FormData();
-    // formData.append("file", file);
-
-    // try {
-    //   const response = await fetch("/api/upload_file", {
-    //     method: "POST",
-    //     body: formData,
-    //   });
-
-    //   const data = await response.json();
-    //   console.log(data);
-    // } catch (error) {
-    //   console.log(error);
-    // }
-
     const fieldErrors = {};
     if (!firstName) {
       fieldErrors.firstName = "Firstname is required";
@@ -132,6 +113,7 @@ const AccountPage = () => {
       setDob("");
       setPhone("");
       setAbout("");
+      setUrl(null);
     }
   };
 
